@@ -1,0 +1,44 @@
+# Account Service - Development Configuration
+# Copy this file to application-dev.yml and adjust values for your local environment
+# Note: application-dev.yml is gitignored to prevent committing sensitive credentials
+
+spring:
+  datasource:
+    # Local PostgreSQL connection (without Docker)
+    # Note: Uses port 5433 to avoid conflict with customer-db on 5432
+    url: jdbc:postgresql://localhost:5433/account_db
+    username: postgres
+    password: postgres
+
+    # HikariCP connection pool configuration
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 10
+      idle-timeout: 600000        # 10 minutes
+      connection-timeout: 30000   # 30 seconds
+      max-lifetime: 1800000       # 30 minutes
+
+  # RabbitMQ connection for event-driven architecture
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+# Server configuration
+server:
+  port: 8082
+
+# Logging configuration for development
+logging:
+  level:
+    root: INFO
+    com.banking.account: DEBUG                       # Enable debug logs for application code
+    org.hibernate.SQL: WARN                          # SQL query logging (set to DEBUG to see queries)
+    org.hibernate.orm.connections.pooling: ERROR     # Connection pool logging
+    org.springframework.amqp: DEBUG                  # RabbitMQ message logging
+
+# API versioning
+api:
+  version: v1
+  base-path: /api/${api.version}

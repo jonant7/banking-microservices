@@ -1,0 +1,140 @@
+services:
+  customer-db:
+    image: 'postgres:17.6-alpine'
+    container_name: customer-db
+    environment:
+      TZ: 'America/Guayaquil'
+      POSTGRES_DB: customer_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - customer-data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres -d customer_db" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - banking-network
+
+  account-db:
+    image: 'postgres:17.6-alpine'
+    container_name: account-db
+    environment:
+      TZ: 'America/Guayaquil'
+      POSTGRES_DB: account_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - account-data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres -d account_db" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - banking-network
+
+  rabbitmq:
+    image: rabbitmq:3.13-management-alpine
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - banking-network
+
+  customer-service:
+    build:
+      context: ./backend
+      dockerfile: customer-service/Dockerfile
+    image: banking-customer-service:latest
+    container_name: customer-service
+    ports:
+      - "8081:8081"
+    environment:
+      CUSTOMER_SERVER_PORT: 8081
+      CUSTOMER_SPRING_PROFILE: docker
+      CUSTOMER_SPRING_DATASOURCE_URL: jdbc:postgresql://customer-db:5432/customer_db
+      CUSTOMER_SPRING_DATASOURCE_USERNAME: postgres
+      CUSTOMER_SPRING_DATASOURCE_PASSWORD: postgres
+      CUSTOMER_SPRING_RABBITMQ_HOST: rabbitmq
+      CUSTOMER_SPRING_RABBITMQ_PORT: 5672
+      CUSTOMER_SPRING_RABBITMQ_USERNAME: guest
+      CUSTOMER_SPRING_RABBITMQ_PASSWORD: guest
+      CUSTOMER_API_VERSION: v1
+    depends_on:
+      customer-db:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - banking-network
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD-SHELL", "wget --spider --quiet http://localhost:8081/actuator/health || exit 1" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  account-service:
+    build:
+      context: ./backend
+      dockerfile: account-service/Dockerfile
+    image: banking-account-service:latest
+    container_name: account-service
+    ports:
+      - "8082:8082"
+    environment:
+      ACCOUNT_SERVER_PORT: 8082
+      ACCOUNT_SPRING_PROFILE: docker
+      ACCOUNT_SPRING_DATASOURCE_URL: jdbc:postgresql://account-db:5432/account_db
+      ACCOUNT_SPRING_DATASOURCE_USERNAME: postgres
+      ACCOUNT_SPRING_DATASOURCE_PASSWORD: postgres
+      ACCOUNT_SPRING_RABBITMQ_HOST: rabbitmq
+      ACCOUNT_SPRING_RABBITMQ_PORT: 5672
+      ACCOUNT_SPRING_RABBITMQ_USERNAME: guest
+      ACCOUNT_SPRING_RABBITMQ_PASSWORD: guest
+      ACCOUNT_API_VERSION: v1
+    depends_on:
+      account-db:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - banking-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "wget --spider --quiet http://localhost:8082/actuator/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+networks:
+  banking-network:
+    driver: bridge
+    name: banking-network
+
+volumes:
+  customer-data:
+    name: banking-customer-data
+  account-data:
+    name: banking-account-data
+  rabbitmq-data:
+    name: banking-rabbitmq-data

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <compositeConfiguration>
+          <compositeBuild compositeDefinitionSource="SCRIPT">
+            <builds>
+              <build path="$PROJECT_DIR$/account-service" name="account-service">
+                <projects>
+                  <project path="$PROJECT_DIR$/account-service" />
+                </projects>
+              </build>
+              <build path="$PROJECT_DIR$/contracts" name="contracts">
+                <projects>
+                  <project path="$PROJECT_DIR$/contracts" />
+                </projects>
+              </build>
+              <build path="$PROJECT_DIR$/customer-service" name="customer-service">
+                <projects>
+                  <project path="$PROJECT_DIR$/customer-service" />
+                </projects>
+              </build>
+            </builds>
+          </compositeBuild>
+        </compositeConfiguration>
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleHome" value="" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/account-service" />
+            <option value="$PROJECT_DIR$/contracts" />
+            <option value="$PROJECT_DIR$/customer-service" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/contracts" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/contracts" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <compositeConfiguration>
+          <compositeBuild compositeDefinitionSource="SCRIPT">
+            <builds>
+              <build path="$PROJECT_DIR$/contracts" name="contracts">
+                <projects>
+                  <project path="$PROJECT_DIR$/contracts" />
+                </projects>
+              </build>
+            </builds>
+          </compositeBuild>
+        </compositeConfiguration>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/customer-service" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/contracts" />
+            <option value="$PROJECT_DIR$/customer-service" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>

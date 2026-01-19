@@ -1,0 +1,25 @@
+# Gradle
+**/.gradle/
+**/build/
+!**/build/libs/*.jar
+
+# IDE
+**/.idea/
+**/*.iml
+**/.vscode/
+
+# Git
+.git/
+.gitignore
+
+# Docs
+README.md
+*.md
+
+# Others
+**/.DS_Store
+**/Thumbs.db
+**/*.log
+
+# Test
+**/src/test/

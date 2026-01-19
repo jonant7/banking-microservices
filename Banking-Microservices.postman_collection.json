@@ -1,0 +1,284 @@
+{
+  "info": {
+    "_postman_id": "44870523-1d21-4627-98a2-1b56adb0121b",
+    "name": "Banking Microservices",
+    "description": "Collection for testing Customer and Account microservices - Complete API testing suite",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "18239359",
+    "_collection_link": "https://go.postman.co/collection/18239359-44870523-1d21-4627-98a2-1b56adb0121b?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Health Checks",
+      "description": "Health status endpoints for Customer and Account services including liveness and readiness probes",
+      "item": [
+        {
+          "name": "Customer Service - Health",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{customer_service_url}}/actuator/health",
+              "host": [
+                "{{customer_service_url}}"
+              ],
+              "path": [
+                "actuator",
+                "health"
+              ]
+            },
+            "description": "Check health status of Customer Service"
+          },
+          "response": []
+        },
+        {
+          "name": "Account Service - Health",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{account_service_url}}/actuator/health",
+              "host": [
+                "{{account_service_url}}"
+              ],
+              "path": [
+                "actuator",
+                "health"
+              ]
+            },
+            "description": "Check health status of Account Service"
+          },
+          "response": []
+        },
+        {
+          "name": "Customer Service - Liveness",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{customer_service_url}}/actuator/health/liveness",
+              "host": [
+                "{{customer_service_url}}"
+              ],
+              "path": [
+                "actuator",
+                "health",
+                "liveness"
+              ]
+            },
+            "description": "Check liveness probe of Customer Service"
+          },
+          "response": []
+        },
+        {
+          "name": "Account Service - Readiness",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{account_service_url}}/actuator/health/readiness",
+              "host": [
+                "{{account_service_url}}"
+              ],
+              "path": [
+                "actuator",
+                "health",
+                "readiness"
+              ]
+            },
+            "description": "Check readiness probe of Account Service"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Database Health",
+      "description": "PostgreSQL database connectivity verification for both microservices",
+      "item": [
+        {
+          "name": "Customer Service - DB Health",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{customer_service_url}}/actuator/health/db",
+              "host": [
+                "{{customer_service_url}}"
+              ],
+              "path": [
+                "actuator",
+                "health",
+                "db"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Account Service - DB Health",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{account_service_url}}/actuator/health/db",
+              "host": [
+                "{{account_service_url}}"
+              ],
+              "path": [
+                "actuator",
+                "health",
+                "db"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Infrastructure Health",
+      "description": "RabbitMQ message broker health checks and management API endpoints",
+      "item": [
+        {
+          "name": "RabbitMQ Management",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{rabbitmq_user}}",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "{{rabbitmq_password}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{rabbitmq_management_url}}/api/overview",
+              "host": [
+                "{{rabbitmq_management_url}}"
+              ],
+              "path": [
+                "api",
+                "overview"
+              ]
+            },
+            "description": "Check RabbitMQ status (requires Basic Auth)"
+          },
+          "response": []
+        },
+        {
+          "name": "Account Service - RabbitMQ Health",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{account_service_url}}/actuator/health/rabbit",
+              "host": [
+                "{{account_service_url}}"
+              ],
+              "path": [
+                "actuator",
+                "health",
+                "rabbit"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Customer Service - RabbitMQ Health",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{customer_service_url}}/actuator/health/rabbit",
+              "host": [
+                "{{customer_service_url}}"
+              ],
+              "path": [
+                "actuator",
+                "health",
+                "rabbit"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Customers",
+      "description": "Customer management endpoints - CRUD operations for customer entities",
+      "item": []
+    },
+    {
+      "name": "Accounts",
+      "description": "Account management endpoints - CRUD operations for bank accounts",
+      "item": []
+    },
+    {
+      "name": "Transactions",
+      "description": "Transaction processing endpoints - deposits, withdrawals, and transfers",
+      "item": []
+    },
+    {
+      "name": "Reports",
+      "description": "Reporting and analytics endpoints - account statements and transaction history",
+      "item": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "customer_service_url",
+      "value": "http://localhost:8081"
+    },
+    {
+      "key": "account_service_url",
+      "value": "http://localhost:8082"
+    },
+    {
+      "key": "rabbitmq_management_url",
+      "value": "http://localhost:15672"
+    },
+    {
+      "key": "rabbitmq_user",
+      "value": "guest"
+    },
+    {
+      "key": "rabbitmq_password",
+      "value": "guest"
+    }
+  ]
+}
