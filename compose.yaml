@@ -60,7 +60,7 @@ services:
 
   customer-service:
     build:
-      context: ./backend
+      context: .
       dockerfile: customer-service/Dockerfile
     image: banking-customer-service:latest
     container_name: customer-service
@@ -94,7 +94,7 @@ services:
 
   account-service:
     build:
-      context: ./backend
+      context: .
       dockerfile: account-service/Dockerfile
     image: banking-account-service:latest
     container_name: account-service

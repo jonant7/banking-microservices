@@ -7,7 +7,6 @@ import org.springframework.context.ApplicationContext;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-@SpringBootTest
 class CustomerServiceApplicationTests extends IntegrationTest {
 
     @Autowired
