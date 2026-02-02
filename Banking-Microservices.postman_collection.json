@@ -498,17 +498,1046 @@
     {
       "name": "Accounts",
       "description": "Account management endpoints - CRUD operations for bank accounts",
-      "item": []
+      "item": [
+        {
+          "name": "Create Account - Jose Lema Savings 478758",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.environment.set(\"account_478758_id\", jsonData.data.id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"accountNumber\": \"478758\",\n  \"accountType\": \"SAVINGS\",\n  \"initialBalance\": 2000.00,\n  \"customerId\": \"{{jose_lema_id}}\"\n}"
+            },
+            "url": {
+              "raw": "{{account_service_url}}/api/v1/accounts",
+              "host": [
+                "{{account_service_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "accounts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Account - Marianela Checking 225487",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.environment.set(\"account_225487_id\", jsonData.data.id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"accountNumber\": \"225487\",\n  \"accountType\": \"CHECKING\",\n  \"initialBalance\": 100.00,\n  \"customerId\": \"{{marianela_montalvo_id}}\"\n}"
+            },
+            "url": {
+              "raw": "{{account_service_url}}/api/v1/accounts",
+              "host": [
+                "{{account_service_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "accounts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Account - Juan Savings 495878",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.environment.set(\"account_495878_id\", jsonData.data.id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"accountNumber\": \"495878\",\n  \"accountType\": \"SAVINGS\",\n  \"initialBalance\": 0.00,\n  \"customerId\": \"{{juan_osorio_id}}\"\n}"
+            },
+            "url": {
+              "raw": "{{account_service_url}}/api/v1/accounts",
+              "host": [
+                "{{account_service_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "accounts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Account - Marianela Savings 496825",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.environment.set(\"account_496825_id\", jsonData.data.id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"accountNumber\": \"496825\",\n  \"accountType\": \"SAVINGS\",\n  \"initialBalance\": 540.00,\n  \"customerId\": \"{{marianela_montalvo_id}}\"\n}"
+            },
+            "url": {
+              "raw": "{{account_service_url}}/api/v1/accounts",
+              "host": [
+                "{{account_service_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "accounts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Account - Jose Checking 585545",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.environment.set(\"account_585545_id\", jsonData.data.id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"accountNumber\": \"585545\",\n  \"accountType\": \"CHECKING\",\n  \"initialBalance\": 1000.00,\n  \"customerId\": \"{{jose_lema_id}}\"\n}"
+            },
+            "url": {
+              "raw": "{{account_service_url}}/api/v1/accounts",
+              "host": [
+                "{{account_service_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "accounts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Accounts",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{account_service_url}}/api/v1/accounts?page=0&size=10",
+              "host": [
+                "{{account_service_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "accounts"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Account By ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{account_service_url}}/api/v1/accounts/{{account_478758_id}}",
+              "host": [
+                "{{account_service_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "accounts",
+                "{{account_478758_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Account By Account Number",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{account_service_url}}/api/v1/accounts/number/478758",
+              "host": [
+                "{{account_service_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "accounts",
+                "number",
+                "478758"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Activate Account",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{account_service_url}}/api/v1/accounts/{{account_478758_id}}/activate",
+              "host": [
+                "{{account_service_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "accounts",
+                "{{account_478758_id}}",
+                "activate"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Deactivate Account",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{account_service_url}}/api/v1/accounts/{{account_478758_id}}/deactivate",
+              "host": [
+                "{{account_service_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "accounts",
+                "{{account_478758_id}}",
+                "deactivate"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
     },
     {
       "name": "Transactions",
       "description": "Transaction processing endpoints - deposits, withdrawals, and transfers",
-      "item": []
+      "item": [
+        {
+          "name": "Transaction - Withdrawal 575 from 478758",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"WITHDRAWAL\",\n  \"amount\": 575.00,\n  \"reference\": \"Retiro de 575\"\n}"
+            },
+            "url": {
+              "raw": "{{account_service_url}}/api/v1/accounts/{{account_478758_id}}/transactions",
+              "host": [
+                "{{account_service_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "accounts",
+                "{{account_478758_id}}",
+                "transactions"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Transaction - Deposit 600 to 225487",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"DEPOSIT\",\n  \"amount\": 600.00,\n  \"reference\": \"Deposito de 600\"\n}"
+            },
+            "url": {
+              "raw": "{{account_service_url}}/api/v1/accounts/{{account_225487_id}}/transactions",
+              "host": [
+                "{{account_service_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "accounts",
+                "{{account_225487_id}}",
+                "transactions"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Transaction - Deposit 150 to 495878",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"DEPOSIT\",\n  \"amount\": 150.00,\n  \"reference\": \"Deposito de 150\"\n}"
+            },
+            "url": {
+              "raw": "{{account_service_url}}/api/v1/accounts/{{account_495878_id}}/transactions",
+              "host": [
+                "{{account_service_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "accounts",
+                "{{account_495878_id}}",
+                "transactions"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Transaction - Withdrawal 540 from 496825",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"WITHDRAWAL\",\n  \"amount\": 540.00,\n  \"reference\": \"Retiro de 540\"\n}"
+            },
+            "url": {
+              "raw": "{{account_service_url}}/api/v1/accounts/{{account_496825_id}}/transactions",
+              "host": [
+                "{{account_service_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "accounts",
+                "{{account_496825_id}}",
+                "transactions"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Transaction - Deposit 300 to 478758",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"DEPOSIT\",\n  \"amount\": 300.00,\n  \"reference\": \"Deposito adicional 300\"\n}"
+            },
+            "url": {
+              "raw": "{{account_service_url}}/api/v1/accounts/{{account_478758_id}}/transactions",
+              "host": [
+                "{{account_service_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "accounts",
+                "{{account_478758_id}}",
+                "transactions"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Transaction - Deposit 450 to 478758",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"DEPOSIT\",\n  \"amount\": 450.00,\n  \"reference\": \"Deposito adicional 450\"\n}"
+            },
+            "url": {
+              "raw": "{{account_service_url}}/api/v1/accounts/{{account_478758_id}}/transactions",
+              "host": [
+                "{{account_service_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "accounts",
+                "{{account_478758_id}}",
+                "transactions"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Transaction - Withdrawal 200 from 478758",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"WITHDRAWAL\",\n  \"amount\": 200.00,\n  \"reference\": \"Retiro adicional 200\"\n}"
+            },
+            "url": {
+              "raw": "{{account_service_url}}/api/v1/accounts/{{account_478758_id}}/transactions",
+              "host": [
+                "{{account_service_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "accounts",
+                "{{account_478758_id}}",
+                "transactions"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Transaction - Deposit 250 to 225487",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"DEPOSIT\",\n  \"amount\": 250.00,\n  \"reference\": \"Deposito adicional 250\"\n}"
+            },
+            "url": {
+              "raw": "{{account_service_url}}/api/v1/accounts/{{account_225487_id}}/transactions",
+              "host": [
+                "{{account_service_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "accounts",
+                "{{account_225487_id}}",
+                "transactions"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Transaction - Deposit 180 to 225487",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"DEPOSIT\",\n  \"amount\": 180.00,\n  \"reference\": \"Deposito adicional 180\"\n}"
+            },
+            "url": {
+              "raw": "{{account_service_url}}/api/v1/accounts/{{account_225487_id}}/transactions",
+              "host": [
+                "{{account_service_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "accounts",
+                "{{account_225487_id}}",
+                "transactions"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Transaction - Withdrawal 100 from 225487",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"WITHDRAWAL\",\n  \"amount\": 100.00,\n  \"reference\": \"Retiro adicional 100\"\n}"
+            },
+            "url": {
+              "raw": "{{account_service_url}}/api/v1/accounts/{{account_225487_id}}/transactions",
+              "host": [
+                "{{account_service_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "accounts",
+                "{{account_225487_id}}",
+                "transactions"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Transaction - Deposit 500 to 495878",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"DEPOSIT\",\n  \"amount\": 500.00,\n  \"reference\": \"Deposito adicional 500\"\n}"
+            },
+            "url": {
+              "raw": "{{account_service_url}}/api/v1/accounts/{{account_495878_id}}/transactions",
+              "host": [
+                "{{account_service_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "accounts",
+                "{{account_495878_id}}",
+                "transactions"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Transaction - Deposit 320 to 495878",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"DEPOSIT\",\n  \"amount\": 320.00,\n  \"reference\": \"Deposito adicional 320\"\n}"
+            },
+            "url": {
+              "raw": "{{account_service_url}}/api/v1/accounts/{{account_495878_id}}/transactions",
+              "host": [
+                "{{account_service_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "accounts",
+                "{{account_495878_id}}",
+                "transactions"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Transaction - Withdrawal 150 from 495878",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"WITHDRAWAL\",\n  \"amount\": 150.00,\n  \"reference\": \"Retiro adicional 150\"\n}"
+            },
+            "url": {
+              "raw": "{{account_service_url}}/api/v1/accounts/{{account_495878_id}}/transactions",
+              "host": [
+                "{{account_service_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "accounts",
+                "{{account_495878_id}}",
+                "transactions"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Transaction - Deposit 400 to 496825",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"DEPOSIT\",\n  \"amount\": 400.00,\n  \"reference\": \"Deposito adicional 400\"\n}"
+            },
+            "url": {
+              "raw": "{{account_service_url}}/api/v1/accounts/{{account_496825_id}}/transactions",
+              "host": [
+                "{{account_service_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "accounts",
+                "{{account_496825_id}}",
+                "transactions"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Transaction - Deposit 275 to 496825",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"DEPOSIT\",\n  \"amount\": 275.00,\n  \"reference\": \"Deposito adicional 275\"\n}"
+            },
+            "url": {
+              "raw": "{{account_service_url}}/api/v1/accounts/{{account_496825_id}}/transactions",
+              "host": [
+                "{{account_service_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "accounts",
+                "{{account_496825_id}}",
+                "transactions"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Transaction - Withdrawal 80 from 496825",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"WITHDRAWAL\",\n  \"amount\": 80.00,\n  \"reference\": \"Retiro adicional 80\"\n}"
+            },
+            "url": {
+              "raw": "{{account_service_url}}/api/v1/accounts/{{account_496825_id}}/transactions",
+              "host": [
+                "{{account_service_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "accounts",
+                "{{account_496825_id}}",
+                "transactions"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Transaction - Insufficient Funds Test",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"WITHDRAWAL\",\n  \"amount\": 10000.00,\n  \"reference\": \"Testing insufficient funds\"\n}"
+            },
+            "url": {
+              "raw": "{{account_service_url}}/api/v1/accounts/{{account_495878_id}}/transactions",
+              "host": [
+                "{{account_service_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "accounts",
+                "{{account_495878_id}}",
+                "transactions"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Transaction By ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{account_service_url}}/api/v1/accounts/transactions/{{transaction_id}}",
+              "host": [
+                "{{account_service_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "accounts",
+                "transactions",
+                "{{transaction_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Transactions By Account",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{account_service_url}}/api/v1/accounts/{{account_225487_id}}/transactions?page=0&size=10&sortBy=createdAt&sortDirection=DESC",
+              "host": [
+                "{{account_service_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "accounts",
+                "{{account_225487_id}}",
+                "transactions"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                },
+                {
+                  "key": "sortBy",
+                  "value": "createdAt"
+                },
+                {
+                  "key": "sortDirection",
+                  "value": "DESC"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Transactions By Date Range",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{account_service_url}}/api/v1/accounts/{{account_225487_id}}/transactions/report?startDate=2024-01-01T00:00:00&endDate=2026-12-31T23:59:59",
+              "host": [
+                "{{account_service_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "accounts",
+                "{{account_225487_id}}",
+                "transactions",
+                "report"
+              ],
+              "query": [
+                {
+                  "key": "startDate",
+                  "value": "2024-01-01T00:00:00"
+                },
+                {
+                  "key": "endDate",
+                  "value": "2026-12-31T23:59:59"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
     },
     {
       "name": "Reports",
       "description": "Reporting and analytics endpoints - account statements and transaction history",
-      "item": []
+      "item": [
+        {
+          "name": "Account Statement - Marianela Montalvo",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{account_service_url}}/api/v1/reports?customerId={{marianela_montalvo_id}}&startDate=2024-01-01T00:00:00&endDate=2026-12-31T23:59:59",
+              "host": [
+                "{{account_service_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "reports"
+              ],
+              "query": [
+                {
+                  "key": "customerId",
+                  "value": "{{marianela_montalvo_id}}"
+                },
+                {
+                  "key": "startDate",
+                  "value": "2024-01-01T00:00:00"
+                },
+                {
+                  "key": "endDate",
+                  "value": "2026-12-31T23:59:59"
+                }
+              ]
+            },
+            "description": "Generate account statement for specific customer and date range"
+          },
+          "response": []
+        },
+        {
+          "name": "Account Statement - Jose Lema",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{account_service_url}}/api/v1/reports?customerId={{jose_lema_id}}&startDate=2024-02-01T00:00:00&endDate=2024-02-28T23:59:59",
+              "host": [
+                "{{account_service_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "reports"
+              ],
+              "query": [
+                {
+                  "key": "customerId",
+                  "value": "{{jose_lema_id}}"
+                },
+                {
+                  "key": "startDate",
+                  "value": "2024-02-01T00:00:00"
+                },
+                {
+                  "key": "endDate",
+                  "value": "2024-02-28T23:59:59"
+                }
+              ]
+            },
+            "description": "Generate monthly account statement"
+          },
+          "response": []
+        },
+        {
+          "name": "Account Statement - Juan Osorio",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{account_service_url}}/api/v1/reports?customerId={{juan_osorio_id}}&startDate=2024-01-01T00:00:00&endDate=2026-12-31T23:59:59",
+              "host": [
+                "{{account_service_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "reports"
+              ],
+              "query": [
+                {
+                  "key": "customerId",
+                  "value": "{{juan_osorio_id}}"
+                },
+                {
+                  "key": "startDate",
+                  "value": "2024-01-01T00:00:00"
+                },
+                {
+                  "key": "endDate",
+                  "value": "2026-12-31T23:59:59"
+                }
+              ]
+            },
+            "description": "Generate full account statement"
+          },
+          "response": []
+        }
+      ]
     }
   ],
   "event": [
@@ -568,6 +1597,36 @@
     },
     {
       "key": "juan_osorio_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "account_478758_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "account_225487_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "account_495878_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "account_496825_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "account_585545_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "transaction_id",
       "value": "",
       "type": "string"
     }
