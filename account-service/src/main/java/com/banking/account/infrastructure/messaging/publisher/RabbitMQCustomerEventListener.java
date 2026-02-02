@@ -1,6 +1,9 @@
 package com.banking.account.infrastructure.messaging.publisher;
 
 import com.banking.account.application.port.out.CustomerEventListener;
+import com.banking.account.application.service.CustomerProjectionService;
+import com.banking.account.domain.model.CustomerInfo;
+import com.banking.account.domain.repository.CustomerProjectionRepository;
 import com.banking.account.infrastructure.config.RabbitMQConfig;
 import com.banking.contracts.events.customer.CustomerCreatedEventV1;
 import com.banking.contracts.events.customer.CustomerStatusChangedEventV1;
@@ -11,10 +14,8 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
-import java.util.Map;
-import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
 @Component
@@ -22,25 +23,16 @@ import java.util.concurrent.ConcurrentHashMap;
 @Primary
 public class RabbitMQCustomerEventListener implements CustomerEventListener {
 
-    private final Map<UUID, CustomerInfo> customerCache = new ConcurrentHashMap<>();
+    private final CustomerProjectionService customerProjectionService;
+    private final CustomerProjectionRepository customerProjectionRepository;
 
     @RabbitListener(queues = RabbitMQConfig.CUSTOMER_CREATED_QUEUE)
     public void handleCustomerCreated(CustomerCreatedEventV1 event) {
         try {
             log.info("Received customer created event: customerId={}", event.getCustomerId());
-
-            customerCache.put(
-                    event.getCustomerId(),
-                    new CustomerInfo(
-                            event.getCustomerId(),
-                            event.getName() + " " + event.getLastName(),
-                            event.getStatus()
-                    )
-            );
-
-            log.info("Customer cached: {} - {}", event.getCustomerId(), event.getName());
+            customerProjectionService.handleCustomerCreated(event);
         } catch (Exception e) {
-            log.error("Error processing customer created event", e);
+            log.error("Error processing customer created event: customerId={}", event.getCustomerId(), e);
             throw new RuntimeException("Failed to process customer created event", e);
         }
     }
@@ -49,23 +41,9 @@ public class RabbitMQCustomerEventListener implements CustomerEventListener {
     public void handleCustomerUpdated(CustomerUpdatedEventV1 event) {
         try {
             log.info("Received customer updated event: customerId={}", event.getCustomerId());
-
-            CustomerInfo existing = customerCache.get(event.getCustomerId());
-            if (Objects.nonNull(existing)) {
-                customerCache.put(
-                        event.getCustomerId(),
-                        new CustomerInfo(
-                                event.getCustomerId(),
-                                event.getName(),
-                                existing.status()
-                        )
-                );
-                log.info("Customer cache updated: {}", event.getCustomerId());
-            } else {
-                log.warn("Received update for unknown customer: {}", event.getCustomerId());
-            }
+            customerProjectionService.handleCustomerUpdated(event);
         } catch (Exception e) {
-            log.error("Error processing customer updated event", e);
+            log.error("Error processing customer updated event: customerId={}", event.getCustomerId(), e);
         }
     }
 
@@ -74,51 +52,39 @@ public class RabbitMQCustomerEventListener implements CustomerEventListener {
         try {
             log.info("Received customer status changed event: customerId={}, newStatus={}",
                     event.getCustomerId(), event.getNewStatus());
-
-            CustomerInfo existing = customerCache.get(event.getCustomerId());
-            if (Objects.nonNull(existing)) {
-                customerCache.put(
-                        event.getCustomerId(),
-                        new CustomerInfo(
-                                event.getCustomerId(),
-                                existing.name(),
-                                event.getNewStatus()
-                        )
-                );
-                log.info("Customer status updated in cache: {}", event.getCustomerId());
-            } else {
-                log.warn("Received status change for unknown customer: {}", event.getCustomerId());
-            }
+            customerProjectionService.handleCustomerStatusChanged(event);
         } catch (Exception e) {
-            log.error("Error processing customer status changed event", e);
+            log.error("Error processing customer status changed event: customerId={}", event.getCustomerId(), e);
         }
     }
 
     @Override
     public boolean customerExists(UUID customerId) {
-        boolean exists = customerCache.containsKey(customerId);
+        boolean exists = customerProjectionRepository.existsById(customerId);
 
         if (!exists) {
-            log.warn("Customer does not exist in cache: customerId={}", customerId);
+            log.warn("Customer does not exist in projection: customerId={}", customerId);
         }
 
         return exists;
     }
 
+
     @Override
     public boolean isCustomerActive(UUID customerId) {
-        CustomerInfo info = customerCache.get(customerId);
+        Optional<CustomerInfo> customerInfoOpt = customerProjectionRepository.findById(customerId);
 
-        if (Objects.isNull(info)) {
-            log.warn("Customer not found in cache: customerId={}", customerId);
+        if (customerInfoOpt.isEmpty()) {
+            log.warn("Customer not found in projection: customerId={}", customerId);
             return false;
         }
 
-        boolean isActive = "ACTIVE".equalsIgnoreCase(info.status());
+        CustomerInfo customerInfo = customerInfoOpt.get();
+        boolean isActive = customerInfo.isActive();
 
         if (!isActive) {
             log.warn("Customer is not active: customerId={}, status={}",
-                    customerId, info.status());
+                    customerId, customerInfo.status());
         }
 
         return isActive;
@@ -126,21 +92,9 @@ public class RabbitMQCustomerEventListener implements CustomerEventListener {
 
     @Override
     public String getCustomerName(UUID customerId) {
-        CustomerInfo info = customerCache.get(customerId);
-        return Objects.nonNull(info) ? info.name() : "Unknown Customer";
-    }
-
-    public void invalidateCache(UUID customerId) {
-        customerCache.remove(customerId);
-        log.debug("Cache invalidated for customer: {}", customerId);
-    }
-
-    public void clearCache() {
-        customerCache.clear();
-        log.info("Customer cache cleared");
-    }
-
-    private record CustomerInfo(UUID customerId, String name, String status) {
+        return customerProjectionRepository.findById(customerId)
+                .map(CustomerInfo::fullName)
+                .orElse("Unknown Customer");
     }
 
 }
