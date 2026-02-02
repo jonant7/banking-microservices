@@ -1,4 +1,4 @@
-package com.banking.customer.infrastructure.infrastructure.messaging.mapper;
+package com.banking.customer.infrastructure.messaging.mapper;
 
 import com.banking.contracts.events.customer.CustomerCreatedEventV1;
 import com.banking.contracts.events.customer.CustomerStatusChangedEventV1;

@@ -1,4 +1,4 @@
-package com.banking.customer.infrastructure.infrastructure.persistence.specification;
+package com.banking.customer.infrastructure.persistence.specification;
 
 import com.banking.customer.application.dto.CustomerFilter;
 import com.banking.customer.infrastructure.persistence.entity.CustomerJpaEntity;

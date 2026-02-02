@@ -1,4 +1,4 @@
-package com.banking.customer.infrastructure.infrastructure.config;
+package com.banking.customer.infrastructure.config;
 
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;

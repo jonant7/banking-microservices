@@ -1,4 +1,4 @@
-package com.banking.customer.infrastructure.infrastructure.persistence.mapper;
+package com.banking.customer.infrastructure.persistence.mapper;
 
 import com.banking.customer.domain.model.*;
 import com.banking.customer.infrastructure.persistence.entity.CustomerJpaEntity;

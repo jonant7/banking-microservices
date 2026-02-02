@@ -1,4 +1,4 @@
-package com.banking.customer.infrastructure.infrastructure.util;
+package com.banking.customer.infrastructure.util;
 
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;

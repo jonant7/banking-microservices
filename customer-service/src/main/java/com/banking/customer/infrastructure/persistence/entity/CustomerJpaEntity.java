@@ -1,4 +1,4 @@
-package com.banking.customer.infrastructure.infrastructure.persistence.entity;
+package com.banking.customer.infrastructure.persistence.entity;
 
 import com.banking.customer.domain.model.CustomerStatus;
 import jakarta.persistence.*;

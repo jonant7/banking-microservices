@@ -1,4 +1,4 @@
-package com.banking.customer.infrastructure.infrastructure.persistence.repository;
+package com.banking.customer.infrastructure.persistence.repository;
 
 import com.banking.customer.application.dto.CustomerFilter;
 import com.banking.customer.domain.model.Customer;

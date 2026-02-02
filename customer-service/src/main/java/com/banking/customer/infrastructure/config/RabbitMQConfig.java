@@ -1,4 +1,4 @@
-package com.banking.customer.infrastructure.infrastructure.config;
+package com.banking.customer.infrastructure.config;
 
 import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;

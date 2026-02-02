@@ -1,4 +1,4 @@
-package com.banking.customer.infrastructure.infrastructure.config;
+package com.banking.customer.infrastructure.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
