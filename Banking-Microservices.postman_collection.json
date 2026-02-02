@@ -217,7 +217,283 @@
     {
       "name": "Customers",
       "description": "Customer management endpoints - CRUD operations for customer entities",
-      "item": []
+      "item": [
+        {
+          "name": "Create Customer - Jose Lema",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.environment.set(\"jose_lema_id\", jsonData.data.id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Jose\",\n  \"lastName\": \"Lema\",\n  \"gender\": \"MALE\",\n  \"birthDate\": \"1990-01-15\",\n  \"identification\": \"1234567890\",\n  \"address\": \"Otavalo sn y principal\",\n  \"phone\": \"098254785\",\n  \"customerId\": \"JOSE001\",\n  \"password\": \"1234\"\n}"
+            },
+            "url": {
+              "raw": "{{customer_service_url}}/api/v1/customers",
+              "host": [
+                "{{customer_service_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "customers"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Customer - Marianela Montalvo",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.environment.set(\"marianela_montalvo_id\", jsonData.data.id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Marianela\",\n  \"lastName\": \"Montalvo\",\n  \"gender\": \"FEMALE\",\n  \"birthDate\": \"1988-05-20\",\n  \"identification\": \"0987654321\",\n  \"address\": \"Amazonas y NNUU\",\n  \"phone\": \"097548965\",\n  \"customerId\": \"MARI001\",\n  \"password\": \"5678\"\n}"
+            },
+            "url": {
+              "raw": "{{customer_service_url}}/api/v1/customers",
+              "host": [
+                "{{customer_service_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "customers"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Customer - Juan Osorio",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.environment.set(\"juan_osorio_id\", jsonData.data.id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Juan\",\n  \"lastName\": \"Osorio\",\n  \"gender\": \"MALE\",\n  \"birthDate\": \"1992-08-10\",\n  \"identification\": \"1122334455\",\n  \"address\": \"13 junio y Equinoccial\",\n  \"phone\": \"098874587\",\n  \"customerId\": \"JUAN001\",\n  \"password\": \"1245\"\n}"
+            },
+            "url": {
+              "raw": "{{customer_service_url}}/api/v1/customers",
+              "host": [
+                "{{customer_service_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "customers"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Customers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{customer_service_url}}/api/v1/customers?page=0&size=10",
+              "host": [
+                "{{customer_service_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "customers"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Customer By ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{customer_service_url}}/api/v1/customers/{{jose_lema_id}}",
+              "host": [
+                "{{customer_service_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "customers",
+                "{{jose_lema_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Customer (PUT)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Jose\",\n  \"lastName\": \"Lema Updated\",\n  \"gender\": \"MALE\",\n  \"birthDate\": \"1990-01-15\",\n  \"address\": \"Otavalo sn y principal - Updated\",\n  \"phone\": \"098254785\",\n  \"password\": \"1234\"\n}"
+            },
+            "url": {
+              "raw": "{{customer_service_url}}/api/v1/customers/{{jose_lema_id}}",
+              "host": [
+                "{{customer_service_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "customers",
+                "{{jose_lema_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Partial Update Customer (PATCH)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"address\": \"New Address for Jose Lema\",\n  \"phone\": \"099999999\"\n}"
+            },
+            "url": {
+              "raw": "{{customer_service_url}}/api/v1/customers/{{jose_lema_id}}",
+              "host": [
+                "{{customer_service_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "customers",
+                "{{jose_lema_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Activate Customer",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{customer_service_url}}/api/v1/customers/{{jose_lema_id}}/activate",
+              "host": [
+                "{{customer_service_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "customers",
+                "{{jose_lema_id}}",
+                "activate"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Deactivate Customer",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{customer_service_url}}/api/v1/customers/{{jose_lema_id}}/deactivate",
+              "host": [
+                "{{customer_service_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "customers",
+                "{{jose_lema_id}}",
+                "deactivate"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
     },
     {
       "name": "Accounts",
@@ -279,6 +555,21 @@
     {
       "key": "rabbitmq_password",
       "value": "guest"
+    },
+    {
+      "key": "jose_lema_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "marianela_montalvo_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "juan_osorio_id",
+      "value": "",
+      "type": "string"
     }
   ]
 }
