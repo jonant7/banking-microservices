@@ -1,5 +1,6 @@
 package com.banking.account.domain.repository;
 
+import com.banking.account.application.dto.AccountFilter;
 import com.banking.account.domain.model.Account;
 import com.banking.account.domain.model.AccountNumber;
 import com.banking.account.domain.model.AccountStatus;
@@ -22,6 +23,8 @@ public interface AccountRepository {
 
     Page<Account> findByCustomerId(UUID customerId, Pageable pageable);
 
+    Page<Account> findAll(AccountFilter filter, Pageable pageable);
+
     boolean existsByAccountNumber(AccountNumber accountNumber);
 
     List<Account> findByCustomerIdAndStatus(UUID customerId, AccountStatus status);
@@ -33,5 +36,4 @@ public interface AccountRepository {
     void deleteAll();
 
     long count();
-
 }
