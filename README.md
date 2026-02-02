@@ -1,183 +1,277 @@
 # Banking Microservices
 
-Banking system with microservices architecture.
+Microservices-based banking system implementing Hexagonal Architecture with event-driven communication.
 
 ## Architecture
 
-- **customer-service**: Customer management (Port: 8081)
-- **account-service**: Account and transaction management (Port: 8082)
-- **Infrastructure**: PostgreSQL (2 databases), RabbitMQ
+**Pattern**: Hexagonal Architecture (Ports & Adapters) + Event-Driven Architecture (EDA)
 
-**Pattern**: Hexagonal Architecture + Event-Driven Architecture
+
+```
+┌─────────────┐     ┌──────────────┐     ┌────────────┐
+│  Frontend   │────►│   Customer   │────►│ PostgreSQL │
+│  (Angular)  │     │   Service    │     │ (Port 5432)│
+└─────────────┘     │  (Port 8081) │     └────────────┘
+      │             └──────┬───────┘
+      │                    │
+      │               ┌────▼─────┐
+      │               │ RabbitMQ │
+      │               │  Events  │
+      │               └────┬─────┘
+      │                    │
+      │             ┌──────▼───────┐     ┌────────────┐
+      └────────────►│   Account    │────►│ PostgreSQL │
+                    │   Service    │     │ (Port 5433)│
+                    │  (Port 8082) │     └────────────┘
+                    └──────────────┘
+```
 
 ## Tech Stack
 
-- Java 21
-- Spring Boot 3.5.9
-- PostgreSQL 17.6
-- RabbitMQ 3.13
-- Flyway (Database migrations)
-- Gradle (Composite Build)
-- Docker & Docker Compose
-
-## Prerequisites
-
-- Docker & Docker Compose
-- Java 21+ (only for local development without Docker)
+- **Java 21** + Spring Boot 3.5.9
+- **PostgreSQL 17.6** (separate DBs per service)
+- **RabbitMQ 3.13** (async messaging)
+- **Flyway** (schema migrations)
+- **Gradle** (composite build)
 
 ## Quick Start
 
 ```bash
-# Clone and start the entire system
+# Clone and start
 git clone https://github.com/jonant7/banking-microservices
 cd banking-microservices
 docker compose up --build
-```
 
-**Available services:**
-- Customer API: http://localhost:8081
-- Account API: http://localhost:8082
-- RabbitMQ Management: http://localhost:15672 (guest/guest)
-
-## API Testing
-
-### Health Checks
-
-```bash
-# Customer Service
+# Verify
 curl http://localhost:8081/actuator/health
-
-# Account Service
 curl http://localhost:8082/actuator/health
 ```
 
-### Postman Collection
+**Access Points**:
+- Customer API: http://localhost:8081
+- Account API: http://localhost:8082
+- RabbitMQ UI: http://localhost:15672 (guest/guest)
 
-Import `Banking-Microservices.postman_collection.json` into Postman to test all endpoints.
+## API Endpoints
 
-**Main endpoints:**
-- Health Checks: `GET /actuator/health`
-- Customer API: `GET/POST /api/customers`
-- Account API: `GET/POST /api/accounts`
-- Reports: `GET /api/reports/accounts/{id}/statement`
+### Customer Service (Port 8081)
 
-## Local Development
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/v1/customers` | Create customer |
+| GET | `/api/v1/customers` | List customers (paginated, filterable) |
+| GET | `/api/v1/customers/{id}` | Get customer by ID |
+| PUT | `/api/v1/customers/{id}` | Full update |
+| PATCH | `/api/v1/customers/{id}` | Partial update |
+| PATCH | `/api/v1/customers/{id}/activate` | Activate customer |
+| PATCH | `/api/v1/customers/{id}/deactivate` | Deactivate customer |
 
-### Build all services
+### Account Service (Port 8082)
 
-```bash
-./gradlew buildAll
-```
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/v1/accounts` | Create account |
+| GET | `/api/v1/accounts` | List accounts (paginated, filterable) |
+| GET | `/api/v1/accounts/{id}` | Get account by ID |
+| GET | `/api/v1/accounts/number/{accountNumber}` | Get by account number |
+| PATCH | `/api/v1/accounts/{id}/activate` | Activate account |
+| PATCH | `/api/v1/accounts/{id}/deactivate` | Deactivate account |
+| POST | `/api/v1/accounts/{accountId}/transactions` | Execute transaction |
+| GET | `/api/v1/accounts/transactions/{transactionId}` | Get transaction by ID |
+| GET | `/api/v1/accounts/{accountId}/transactions` | List account transactions |
+| GET | `/api/v1/accounts/{accountId}/transactions/report` | Transactions by date range |
 
-### Run tests
+### Reports Service (Port 8082)
 
-```bash
-./gradlew testAll
-```
-
-### Build specific service
-
-```bash
-cd customer-service
-./gradlew build
-```
-
-### Run specific service locally
-
-```bash
-cd customer-service
-./gradlew bootRun
-```
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/v1/reports?customerId={id}&startDate={date}&endDate={date}` | Account statement report |
 
 ## Project Structure
 
 ```
 banking-microservices/
-├── customer-service/          # Customer management microservice
-│   ├── src/
-│   │   ├── main/
-│   │   │   ├── java/
-│   │   │   └── resources/
-│   │   │       └── db/migration/    # Flyway migrations
-│   │   └── test/
-│   ├── build.gradle
-│   └── Dockerfile
+├── customer-service/
+│   └── src/main/java/com/banking/customer/
+│       ├── application/          # Use cases, DTOs, ports
+│       ├── domain/               # Entities, events, exceptions
+│       ├── infrastructure/       # JPA, RabbitMQ, config
+│       └── presentation/         # REST controllers
 │
-├── account-service/           # Account management microservice
-│   ├── src/
-│   │   ├── main/
-│   │   │   ├── java/
-│   │   │   └── resources/
-│   │   │       └── db/migration/    # Flyway migrations
-│   │   └── test/
-│   ├── build.gradle
-│   └── Dockerfile
+├── account-service/              # Same structure
 │
-├── compose.yaml              # Docker Compose orchestration
-├── settings.gradle           # Composite build configuration
-├── build.gradle              # Root build tasks
-└── README.md
+├── compose.yaml                  # Docker orchestration
+└── build.gradle                  # Gradle composite build
 ```
 
-## Database Migrations
+## Domain Events
 
-Database migrations are managed automatically with Flyway.
+**Published by Customer Service**:
+- `CustomerCreatedEvent` → Account Service creates default account
+- `CustomerUpdatedEvent` → Account Service updates customer info
+- `CustomerStatusChangedEvent` → Account Service activates/deactivates accounts
 
-**No manual SQL script execution is required.**
+**Event Flow**:
+```
+Customer Service → RabbitMQ (customer.events.exchange) → Account Service
+```
 
-When services start, Flyway:
-1. Detects the database state
-2. Executes pending migrations
-3. Records versioning in `schema_history` table
+## Database Schema
 
-Location: `src/main/resources/db/migration/`
+Both services use Flyway for automatic migrations on startup.
 
-## Services Configuration
+**customer_db** (Port 5432):
+- Schema: `core`
+- Tables: `customers`, `persons`
 
-### Customer Service
-- **Port**: 8081
-- **Database**: customer_db (PostgreSQL)
-- **Schema**: core
-- **Message Broker**: RabbitMQ
+**account_db** (Port 5433):
+- Schema: `core`
+- Tables: `accounts`, `transactions`, `movements`
 
-### Account Service
-- **Port**: 8082
-- **Database**: account_db (PostgreSQL)
-- **Schema**: core
-- **Message Broker**: RabbitMQ
+## Development
 
-## Infrastructure
-
-### PostgreSQL Databases
-
-- **customer-db**: Port 5432
-- **account-db**: Port 5433
-
-Both use the `core` schema for business logic.
-
-### RabbitMQ
-
-- **AMQP Port**: 5672
-- **Management UI**: http://localhost:15672
-- **Credentials**: guest/guest
-
-## Stopping Services
+### Build & Test
 
 ```bash
-# Stop services
-docker compose down
+# Build all
+./gradlew buildAll
 
-# Stop and remove volumes (clean database)
-docker compose down -v
+# Run tests
+./gradlew testAll
+
+# Build specific service
+cd customer-service && ./gradlew build
 ```
 
-## Development Notes
+### Run Locally
 
-- Database schemas are created automatically by Flyway
-- All microservices are independent Spring Boot applications
-- Composite build allows managing both services from root
-- Docker multi-stage builds optimize image size
+```bash
+# Start infrastructure only
+docker compose up customer-db account-db rabbitmq
 
-### Port conflicts
+# Run service
+cd customer-service
+./gradlew bootRun --args='--spring.profiles.active=dev'
+```
 
-Ensure ports 5432, 5433, 5672, 8081, 8082, and 15672 are not in use by other applications.
+### Configuration Profiles
+
+- `default`: Production settings
+- `dev`: Local development
+- `docker`: Container environment
+
+## API Examples
+
+### Create Customer
+
+```bash
+curl -X POST http://localhost:8081/api/v1/customers \
+  -H "Content-Type: application/json" \
+  -d '{
+    "person": {
+      "name": "John Doe",
+      "gender": "MALE",
+      "dateOfBirth": "1990-01-15",
+      "identification": "1234567890",
+      "address": "123 Main St",
+      "phoneNumber": "+593987654321"
+    },
+    "password": "securePass123"
+  }'
+```
+
+### Create Account
+
+```bash
+curl -X POST http://localhost:8082/api/v1/accounts \
+  -H "Content-Type: application/json" \
+  -d '{
+    "customerId": "uuid-from-customer-creation",
+    "accountNumber": "ACC001",
+    "accountType": "SAVINGS",
+    "initialBalance": 1000.00
+  }'
+```
+
+### Execute Transaction
+
+```bash
+curl -X POST http://localhost:8082/api/v1/accounts/{accountId}/transactions \
+  -H "Content-Type: application/json" \
+  -d '{
+    "type": "DEPOSIT",
+    "amount": 500.00,
+    "description": "Deposit"
+  }'
+```
+
+### Generate Statement
+
+```bash
+curl "http://localhost:8082/api/v1/reports?customerId={id}&startDate=2026-01-01T00:00:00&endDate=2026-02-01T23:59:59"
+```
+
+## Response Format
+
+**Success**:
+```json
+{
+  "success": true,
+  "data": { ... },
+  "message": "Operation completed successfully",
+  "timestamp": "2026-02-02T10:30:00Z"
+}
+```
+
+**Error**:
+```json
+{
+  "success": false,
+  "error": {
+    "code": "CUSTOMER_NOT_FOUND",
+    "message": "Customer not found with ID: xyz",
+    "timestamp": "2026-02-02T10:30:00Z"
+  }
+}
+```
+
+## Testing
+
+Import `Banking-Microservices.postman_collection.json` for complete API testing.
+
+## Troubleshooting
+
+```bash
+# View logs
+docker compose logs -f customer-service
+docker compose logs -f account-service
+
+# Restart services
+docker compose restart
+
+# Clean restart (removes data)
+docker compose down -v
+docker compose up --build
+```
+
+## Key Design Decisions
+
+1. **Database per Service**: Each microservice owns its database, ensuring loose coupling
+2. **Event-Driven Communication**: Async events via RabbitMQ for inter-service communication
+3. **Hexagonal Architecture**: Clear separation between domain logic and infrastructure
+4. **Aggregate Root Pattern**: Customer and Account as aggregate roots with domain events
+5. **Optimistic Locking**: Version control for concurrent updates
+6. **Soft Deletes**: Status-based deactivation instead of hard deletes
+
+## Technical Highlights
+
+- **DDD**: Rich domain models with business invariants
+- **CQRS**: Separate read/write models where appropriate
+- **Repository Pattern**: Abstraction over data access
+- **Mapper Pattern**: Clean DTO transformations
+- **Builder Pattern**: Test data creation
+- **Specification Pattern**: Dynamic query building
+
+---
+
+**Made with Spring Boot + Hexagonal Architecture**
