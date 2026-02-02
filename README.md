@@ -8,22 +8,22 @@ Microservices-based banking system implementing Hexagonal Architecture with even
 
 
 ```
-┌─────────────┐     ┌──────────────┐     ┌────────────┐
-│  Frontend   │────►│   Customer   │────►│ PostgreSQL │
-│  (Angular)  │     │   Service    │     │ (Port 5432)│
-└─────────────┘     │  (Port 8081) │     └────────────┘
-      │             └──────┬───────┘
-      │                    │
-      │               ┌────▼─────┐
-      │               │ RabbitMQ │
-      │               │  Events  │
-      │               └────┬─────┘
-      │                    │
-      │             ┌──────▼───────┐     ┌────────────┐
-      └────────────►│   Account    │────►│ PostgreSQL │
-                    │   Service    │     │ (Port 5433)│
-                    │  (Port 8082) │     └────────────┘
-                    └──────────────┘
+┌──────────────────┐         ┌──────────────────┐
+│ Customer Service │────────▶│ Account Service  │
+│    (Port 8081)   │  Events │   (Port 8082)    │
+└────────┬─────────┘         └────────┬─────────┘
+         │                            │
+    ┌────▼─────┐                 ┌────▼─────┐
+    │customer_db│                 │account_db│
+    │PostgreSQL │                 │PostgreSQL│
+    └───────────┘                 └──────────┘
+         │                            │
+         └──────────┬─────────────────┘
+                    │
+              ┌─────▼──────┐
+              │  RabbitMQ  │
+              │ Event Bus  │
+              └────────────┘
 ```
 
 ## Tech Stack
