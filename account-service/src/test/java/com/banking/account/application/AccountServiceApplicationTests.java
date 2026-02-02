@@ -1,5 +1,6 @@
-package com.banking.account;
+package com.banking.account.application;
 
+import com.banking.account.IntegrationTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
